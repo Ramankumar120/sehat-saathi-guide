@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
@@ -28,13 +28,16 @@ const VoiceInput: React.FC<VoiceInputProps> = ({
     stopListening,
     resetTranscript,
   } = useSpeechRecognition(language);
+  
+  const lastTranscriptRef = useRef('');
 
-  // Send transcript to parent when it changes
+  // Only send transcript when listening stops and we have new text
   useEffect(() => {
-    if (transcript) {
+    if (!isListening && transcript && transcript !== lastTranscriptRef.current) {
       onTranscript(transcript);
+      lastTranscriptRef.current = transcript;
     }
-  }, [transcript, onTranscript]);
+  }, [isListening, transcript, onTranscript]);
 
   // Notify parent of listening state changes
   useEffect(() => {
@@ -45,6 +48,7 @@ const VoiceInput: React.FC<VoiceInputProps> = ({
     if (isListening) {
       stopListening();
     } else {
+      lastTranscriptRef.current = '';
       resetTranscript();
       startListening();
     }
@@ -95,11 +99,13 @@ const VoiceInput: React.FC<VoiceInputProps> = ({
         </div>
       )}
 
-      {/* Listening indicator */}
+      {/* Listening indicator with live transcript */}
       {isListening && (
-        <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded whitespace-nowrap z-50 flex items-center gap-1">
-          <Loader2 className="w-3 h-3 animate-spin" />
-          {language === 'hi' ? 'सुन रहा हूं...' : 'Listening...'}
+        <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded whitespace-nowrap z-50 flex items-center gap-1 max-w-48 overflow-hidden">
+          <Loader2 className="w-3 h-3 animate-spin flex-shrink-0" />
+          <span className="truncate">
+            {transcript || (language === 'hi' ? 'सुन रहा हूं...' : 'Listening...')}
+          </span>
         </div>
       )}
     </div>
