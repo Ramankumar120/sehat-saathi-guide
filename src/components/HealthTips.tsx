@@ -20,7 +20,8 @@ import {
   Ban,
   Brush,
   Shield,
-  Smartphone,
+  SmartphoneNfc,
+
   AlertTriangle,
   HeartPulse,
   Smile,
@@ -46,7 +47,7 @@ const iconMap: Record<string, React.FC<any>> = {
   ban: Ban,
   broom: Brush,
   shield: Shield,
-  smartphone: Smartphone,
+  smartphone: SmartphoneNfc,
   "alert-triangle": AlertTriangle,
   "heart-pulse": HeartPulse,
   smile: Smile,
