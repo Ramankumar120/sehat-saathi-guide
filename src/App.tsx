@@ -18,6 +18,12 @@ import HealthTips from '@/components/HealthTips';
 import MedicineStore from '@/components/MedicineStore';
 import AIAssistant from '@/components/AIAssistant';
 import MedicalHistoryPage from '@/pages/MedicalHistory';
+import LabTests from "./pages/LabTests";
+import LabTestDetails from "@/pages/LabTestDetails";
+import LabBooking from "@/pages/LabBooking";
+
+import SarkariYojana from "@/components/SarkariYojana";
+
 import NearbyHospitals from '@/components/NearbyHospitals';
 import Cart from '@/components/Cart';
 import Checkout from '@/components/Checkout';
@@ -28,10 +34,13 @@ import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import Reminders from "@/pages/Reminders";
+import NotificationHistory from "@/pages/NotificationHistory";
 import VideoConsultation from '@/pages/VideoConsultation';
 import Offers from "@/components/Offers";
 import OfflineIndicator from "@/components/OfflineIndicator";
-import GovernmentSchemes from '@/pages/GovernmentSchemes';
+import GovernmentSchemes from "@/pages/GovernmentSchemes";
+import ContactUs from "@/pages/ContactUs";
+
 
 const queryClient = new QueryClient();
 
@@ -104,6 +113,11 @@ const App = () => {
                       <Route path="/symptoms" element={<SymptomTracker />} />
                       <Route path="/tips" element={<HealthTips />} />
                       <Route path="/store" element={<MedicineStore />} />
+<Route path="/medical-history" element={<MedicalHistoryPage />} />
+<Route path="/lab-tests" element={<LabTests />} />
+<Route path="/lab-tests/:id" element={<LabTestDetails />} />
+<Route path="/lab-tests/:id/book" element={<LabBooking />} />
+
                       <Route path="/assistant" element={<AIAssistant />} />
                       <Route path="/medical-history" element={<MedicalHistoryPage />} />
                       <Route path="/schemes" element={<GovernmentSchemes />} />
@@ -116,7 +130,9 @@ const App = () => {
                       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                       <Route path="/terms-and-conditions" element={<TermsConditions />} />
                       <Route path="/offers" element={<Offers />} />
+                      <Route path="/notifications" element={<NotificationHistory />} />
                       <Route path="/consultation/:id" element={<VideoConsultation />} />
+                      <Route path="/contact" element={<ContactUs />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
 
